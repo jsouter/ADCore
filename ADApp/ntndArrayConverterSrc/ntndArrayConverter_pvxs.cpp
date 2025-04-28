@@ -225,25 +225,25 @@ template <typename valueType>
 void NTNDArrayConverter::toAttribute (NDArray *dest, pvxs::Value attribute, NDAttrDataType_t dataType)
 {
     // TODO, can we make dataType a template parameter?
-    const char *name = attribute["name"].as<std::string>().c_str();
-    const char *desc = attribute["descriptor"].as<std::string>().c_str();
-    const char *source = attribute["source"].as<std::string>().c_str();
+    std::string name = attribute["name"].as<std::string>();
+    std::string desc = attribute["descriptor"].as<std::string>();
+    std::string source = attribute["source"].as<std::string>();
     NDAttrSource_t sourceType = (NDAttrSource_t) attribute["sourceType"].as<int32_t>();
     valueType value = attribute["value"].as<valueType>();
 
-    NDAttribute *attr = new NDAttribute(name, desc, sourceType, source, dataType, (void*)&value);
+    NDAttribute *attr = new NDAttribute(name.c_str(), desc.c_str(), sourceType, source.c_str(), dataType, (void*)&value);
     dest->pAttributeList->add(attr);
 }
 
 void NTNDArrayConverter::toStringAttribute (NDArray *dest, pvxs::Value attribute)
 {
-    const char *name = attribute["name"].as<std::string>().c_str();
-    const char *desc = attribute["descriptor"].as<std::string>().c_str();
-    const char *source = attribute["source"].as<std::string>().c_str();
+    std::string name = attribute["name"].as<std::string>();
+    std::string desc = attribute["descriptor"].as<std::string>();
+    std::string source = attribute["source"].as<std::string>();
     NDAttrSource_t sourceType = (NDAttrSource_t) attribute["sourceType"].as<int32_t>();
-    const char *value = attribute["value"].as<std::string>().c_str();
+    std::string value = attribute["value"].as<std::string>();
 
-    NDAttribute *attr = new NDAttribute(name, desc, sourceType, source, NDAttrDataType_t::NDAttrString, (void*)value);
+    NDAttribute *attr = new NDAttribute(name.c_str(), desc.c_str(), sourceType, source.c_str(), NDAttrDataType_t::NDAttrString, (void*)value.c_str());
     dest->pAttributeList->add(attr);
 }
 
