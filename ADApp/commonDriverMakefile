@@ -23,7 +23,13 @@ ifeq ($(WITH_QSRV),YES)
   PROD_LIBS += qsrv
 endif
 
-ifeq ($(WITH_PVA),YES)
+ifeq ($(WITH_PVXS),YES)
+  $(DBD_NAME)_DBD += pvxsIoc.dbd
+  PROD_LIBS += pvxsIoc pvxs
+  PROD_LIBS += $(EPICS_BASE_IOC_LIBS)
+  PROD_LIBS += ntndArrayConverter
+  $(DBD_NAME)_DBD += NDPluginPva.dbd
+else ifeq ($(WITH_PVA),YES)
   $(DBD_NAME)_DBD += NDPluginPva.dbd
   $(DBD_NAME)_DBD += PVAServerRegister.dbd
   PROD_LIBS += ntndArrayConverter
