@@ -73,7 +73,6 @@ typedef std::tr1::shared_ptr<NTNDArrayConverter> NTNDArrayConverterPtr;
 #include <ntndArrayConverterAPI.h>
 #include <NDArray.h>
 #include <pvxs/data.h>
-#include <pvxs/nt.h>
 
 typedef struct NTNDArrayInfo
 {
