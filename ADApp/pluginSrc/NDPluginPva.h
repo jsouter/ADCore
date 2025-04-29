@@ -1,6 +1,8 @@
 #ifndef NDPluginPva_H
 #define NDPluginPva_H
 
+#define NDPluginPvaPvNameString "PV_NAME"
+
 #ifndef HAVE_PVXS
 
 #include "NDPluginDriver.h"
@@ -9,8 +11,6 @@
 #include <pv/lock.h>
 #include <pv/pvData.h>
 #include <vector>
-
-#define NDPluginPvaPvNameString "PV_NAME"
 
 class NTNDArrayRecord;
 typedef std::tr1::shared_ptr<NTNDArrayRecord> NTNDArrayRecordPtr;
@@ -40,8 +40,6 @@ private:
 
 #include "NDPluginDriver.h"
 #include <vector>
-
-#define NDPluginPvaPvNameString "PV_NAME"
 
 class NTNDArrayRecord;
 typedef std::shared_ptr<NTNDArrayRecord> NTNDArrayRecordPtr;
