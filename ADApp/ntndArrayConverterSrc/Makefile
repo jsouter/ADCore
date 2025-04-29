@@ -21,7 +21,6 @@ LIB_LIBS              += ADBase
 
 ifeq ($(WITH_PVXS),YES)
 	LIB_LIBS 			  += pvxs
-	LIB_LIBS 			  += Com
 else
 	LIB_LIBS              += pvData
 	LIB_LIBS              += nt

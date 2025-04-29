@@ -191,9 +191,9 @@ ifeq ($(WITH_TIFF),YES)
 endif
 
 ifeq ($(WITH_PVXS), YES)
+  DBD += NDPluginPva.dbd
   INC += NDPluginPva.h
   LIB_SRCS += NDPluginPva_pvxs.cpp
-  DBD += NDPluginPva.dbd
   USR_CXXFLAGS += -DHAVE_PVXS
 else ifeq ($(WITH_PVA), YES)
   DBD += NDPluginPva.dbd

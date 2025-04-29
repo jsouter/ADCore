@@ -5,7 +5,6 @@ LIB_LIBS += asyn
 
 ifeq ($(WITH_PVXS),YES)
   LIB_LIBS += pvxs
-  LIB_LIBS += Com
   LIB_LIBS += ntndArrayConverter
 else ifeq ($(WITH_PVA),YES)
   LIB_LIBS += ntndArrayConverter
