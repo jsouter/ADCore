@@ -3,15 +3,17 @@
 LIB_LIBS += ADBase
 LIB_LIBS += asyn
 
-ifeq ($(WITH_PVXS),YES)
-  LIB_LIBS += pvxs
-  LIB_LIBS += ntndArrayConverter
-else ifeq ($(WITH_PVA),YES)
+ifeq ($(WITH_PVA),YES)
   LIB_LIBS += ntndArrayConverter
   LIB_LIBS += nt
   LIB_LIBS += pvDatabase
   LIB_LIBS += pvAccess
   LIB_LIBS += pvData
+endif
+
+ifeq ($(WITH_PVXS),YES)
+  LIB_LIBS += ntndArrayConverterPvxs
+  LIB_LIBS += pvxs
 endif
 
 ifeq ($(WITH_NETCDF),YES)

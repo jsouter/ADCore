@@ -23,11 +23,7 @@ ifeq ($(WITH_QSRV),YES)
   PROD_LIBS += qsrv
 endif
 
-ifeq ($(WITH_PVXS),YES)
-  $(DBD_NAME)_DBD += NDPluginPva.dbd
-  PROD_LIBS += pvxs
-  PROD_LIBS += ntndArrayConverter
-else ifeq ($(WITH_PVA),YES)
+ifeq ($(WITH_PVA),YES)
   $(DBD_NAME)_DBD += NDPluginPva.dbd
   $(DBD_NAME)_DBD += PVAServerRegister.dbd
   PROD_LIBS += ntndArrayConverter
@@ -39,6 +35,12 @@ else ifeq ($(WITH_PVA),YES)
     PROD_LIBS += pvAccess
     PROD_LIBS += pvData
   endif
+endif
+
+ifeq ($(WITH_PVXS),YES)
+  $(DBD_NAME)_DBD += NDPluginPvxs.dbd
+  PROD_LIBS += pvxs
+  PROD_LIBS += ntndArrayConverterPvxs
 endif
 
 ifeq ($(WITH_NETCDF),YES)

@@ -1,16 +1,14 @@
 #ifndef NDPluginPva_H
 #define NDPluginPva_H
 
-#define NDPluginPvaPvNameString "PV_NAME"
-
-#ifndef HAVE_PVXS
-
 #include "NDPluginDriver.h"
 
 #include <pv/serverContext.h>
 #include <pv/lock.h>
 #include <pv/pvData.h>
 #include <vector>
+
+#define NDPluginPvaPvNameString "PV_NAME"
 
 class NTNDArrayRecord;
 typedef std::tr1::shared_ptr<NTNDArrayRecord> NTNDArrayRecordPtr;
@@ -36,33 +34,4 @@ private:
     NTNDArrayRecordPtr m_record;
 };
 
-#else
-
-#include "NDPluginDriver.h"
-#include <vector>
-
-class NTNDArrayRecord;
-typedef std::shared_ptr<NTNDArrayRecord> NTNDArrayRecordPtr;
-
-/** Converts NDArray callback data into EPICS V4 NTNDArray data and exposes it
-  * as an EPICS V4 PV  */
-class NDPLUGIN_API NDPluginPva : public NDPluginDriver,
-                     public std::enable_shared_from_this<NDPluginPva>
-{
-public:
-    NDPluginPva(const char *portName, int queueSize, int blockingCallbacks,
-                 const char *NDArrayPort, int NDArrayAddr, const char *pvName,
-                 int maxBuffers, size_t maxMemory, int priority, int stackSize);
-
-    /* These methods override the virtual methods in the base class */
-    void processCallbacks(NDArray *pArray);
-
-protected:
-    int NDPluginPvaPvName;
-
-private:
-    NTNDArrayRecordPtr m_record;
-};
-
-#endif
 #endif

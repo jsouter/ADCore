@@ -2,7 +2,10 @@
 
 #include <ntndArrayConverterAPI.h>
 #include <NDArray.h>
-#include <pv/ntndarray.h>
+#include <pvxs/data.h>
+#include <typeindex>
+#include <typeinfo>
+#include <unordered_map>
 
 typedef struct NTNDArrayInfo
 {
@@ -21,19 +24,19 @@ typedef struct NTNDArrayInfo
     }x, y, color;
 }NTNDArrayInfo_t;
 
-class NTNDARRAYCONVERTER_API NTNDArrayConverter
+class NTNDARRAYCONVERTER_API NTNDArrayConverterPvxs
 {
 public:
-    NTNDArrayConverter(epics::nt::NTNDArrayPtr array);
-
+    NTNDArrayConverterPvxs(pvxs::Value value);
     NTNDArrayInfo_t getInfo (void);
     void toArray (NDArray *dest);
     void fromArray (NDArray *src);
 
 private:
-    epics::nt::NTNDArrayPtr m_array;
-
-    epics::pvData::ScalarType getValueType (void);
+    pvxs::Value m_value;
+    std::unordered_map<std::type_index, NDAttrDataType_t> m_typeMap;
+    std::unordered_map<std::type_index, std::string> m_fieldNameMap;
+    std::unordered_map<std::type_index, pvxs::ArrayType> m_arrayTypeMap;
     NDColorMode_t getColorMode (void);
 
     template <typename arrayType>
@@ -44,25 +47,24 @@ private:
     void toTimeStamp (NDArray *dest);
     void toDataTimeStamp (NDArray *dest);
 
-    template <typename pvAttrType, typename valueType>
-    void toAttribute (NDArray *dest, epics::pvData::PVStructurePtr src);
-    void toStringAttribute (NDArray *dest, epics::pvData::PVStructurePtr src);
-    void toUndefinedAttribute (NDArray *dest, epics::pvData::PVStructurePtr src);
+    template <typename valueType>
+    void toAttribute (NDArray *dest, pvxs::Value attribute);
+    void toStringAttribute (NDArray *dest, pvxs::Value attribute);
+    void toUndefinedAttribute (NDArray *dest, pvxs::Value attribute);
     void toAttributes (NDArray *dest);
 
-    template <typename arrayType, typename srcDataType>
+    template <typename arrayType>
     void fromValue (NDArray *src);
     void fromValue (NDArray *src);
-
+    
     void fromDimensions (NDArray *src);
     void fromTimeStamp (NDArray *src);
     void fromDataTimeStamp (NDArray *src);
 
-    template <typename pvAttrType, typename valueType>
-    void fromAttribute (epics::pvData::PVStructurePtr dest, NDAttribute *src);
-    void fromStringAttribute (epics::pvData::PVStructurePtr dest, NDAttribute *src);
-    void fromUndefinedAttribute (epics::pvData::PVStructurePtr dest);
+    template <typename valueType>
+    void fromAttribute (pvxs::Value destValue, NDAttribute *src);
+    void fromStringAttribute (pvxs::Value destValue, NDAttribute *src);
     void fromAttributes (NDArray *src);
 };
 
-typedef std::tr1::shared_ptr<NTNDArrayConverter> NTNDArrayConverterPtr;
+typedef std::shared_ptr<NTNDArrayConverterPvxs> NTNDArrayConverterPvxsPtr;
